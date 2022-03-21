@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import GameCase from "./GameCase";
 import { Button, Container } from "./style";
-import { motion } from "framer-motion"
+import { motion } from "framer-motion";
 
 export interface ICases {
   id: number;
@@ -23,28 +23,46 @@ const GameZone = () => {
   //rules of game
   useEffect(() => {
     checkRules();
+    console.log(playerTurn)
   }, [gameCases]);
+
+  //check 1st 3 games winner
+  useEffect(() => {
+    checkGameWinner();
+  }, [scoreP1, scoreP2]);
 
   //function init game array
   const initGameArray = () => {
-
     if (gameStarted === true) {
       let gameArray = [] as ICases[];
       for (let i = 0; i < 9; i++) {
         gameArray.push({ id: i, status: undefined });
       }
-       setGameCases(gameArray);
+      setGameCases(gameArray);
       initPlayerTurn();
     } else {
       setGameCases([] as ICases[]);
+      setScoreP1(0);
+      setScoreP2(0);
     }
   };
+
+  //function check if player has 3 win
+  const checkGameWinner = () =>{
+    if(scoreP1 === 3){
+      alert("winner p1")
+      setGameStarted(false);
+    }
+    else if( scoreP2 === 3){
+      alert("winner p2")
+      setGameStarted(false);
+    }
+  }
 
   //function init player turn
   const initPlayerTurn = () => {
     const getRandomInt = Math.floor(Math.random() * 2);
     setPlayerTurn(getRandomInt === 0 ? true : false);
-    alert(`${getRandomInt === 0 ? "player1 begin" : "player2 begin"}`);
   };
 
   //function games rules
@@ -62,7 +80,8 @@ const GameZone = () => {
         });
 
         if (Object.keys(FilledCaseCount).length === 0) {
-          initGameArray();
+           initGameArray();
+           return;
         }
 
         if (winArray.includes(undefined)) {
@@ -74,7 +93,7 @@ const GameZone = () => {
         }
 
         const playerWin = winArray[0];
-        alert(`${playerWin} has win`);
+        alert(`${playerWin} win`);
         playerWin === "p1"
           ? setScoreP1((prev) => {
               return prev + 1;
@@ -82,7 +101,7 @@ const GameZone = () => {
           : setScoreP2((prev) => {
               return prev + 1;
             });
-            
+
         initGameArray();
       };
 
@@ -101,46 +120,47 @@ const GameZone = () => {
     if (gameCases[id].status !== undefined) {
       return;
     }
-    setPlayerTurn(!playerTurn);
     let NewCases = [...gameCases];
     let NewCase = { ...NewCases[id] };
     NewCase.status = playerTurn ? "p1" : "p2";
     NewCases[id] = NewCase;
 
     setGameCases(NewCases);
+    setPlayerTurn(!playerTurn);
   };
 
-
   //animations
-  const button ={
-    hidden:{scale:0, rotate:0},
-    visible: {scale:1,rotate:357}
-  }
+  const button = {
+    hidden: { scale: 0, rotate: 0 },
+    visible: { scale: 1, rotate: 357 },
+  };
   return (
     <>
       {!gameStarted && (
-        <Button as={motion.div} 
-        initial="hidden"
-        animate="visible" 
-        transition={{ type: "spring", stiffness: 100,duration: 1 }}
-        whileHover={{
-          scale: 1.1,
-          transition: { duration: 0.4 },
-        }}
-        whileTap={{ scale: 0.9 }}
-        variants={button}
-        className="btn" 
-        onClick={(e:any) => setGameStarted(true)}>
+        <Button
+          as={motion.div}
+          initial="hidden"
+          animate="visible"
+          transition={{ type: "spring", stiffness: 100, duration: 1 }}
+          whileHover={{
+            scale: 1.1,
+            transition: { duration: 0.4 },
+          }}
+          whileTap={{ scale: 0.9 }}
+          variants={button}
+          className="btn"
+          onClick={(e: any) => setGameStarted(true)}
+        >
           Démarrer une partie
         </Button>
       )}
       {gameStarted && (
         <Container>
           <div className="scores">
-            <p className="score1">
+            <p className={`${playerTurn === false ? "":"active"} score1`}>
               joueur 1 : <span>{scoreP1}</span>
             </p>
-            <p className="score2">
+            <p className={`${playerTurn === true ? "":"active"} score2`}>
               joueur 2 : <span>{scoreP2}</span>{" "}
             </p>
           </div>

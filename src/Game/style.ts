@@ -44,8 +44,16 @@ export const Container = styled.div`
     display:flex; 
     justify-content: space-between;
 
-    .score1{color:#0786ca}
-    .score2{color:#c01c1c}
+    .score1{
+        color:#0786ca;
+    &.active{border:2px solid}
+}
+.score2{
+    color:#c01c1c;
+    &.active{border:2px solid}
+    
+    }
+
 }
 .gameBoard{
     margin-top:3rem;
