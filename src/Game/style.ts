@@ -15,6 +15,20 @@ export const GameCaseStyle = styled.div`
   font-size: 200%;
 `;
 export const Container = styled.div`
+
+.Popup{
+    position: fixed;
+    width: 100vw ;
+    height: 100vh ;
+    top: 0;
+    right: 0; ;
+    background-color: #fff;
+    display:flex ;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
 .gameCaseWrapper{
     display: flex;
     justify-content: center;
@@ -46,10 +60,12 @@ export const Container = styled.div`
 
     .score1{
         color:#0786ca;
+        padding: 10px 20px;
     &.active{border:2px solid}
 }
 .score2{
     color:#c01c1c;
+    padding: 10px 20px;
     &.active{border:2px solid}
     
     }
