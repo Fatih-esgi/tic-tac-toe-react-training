@@ -23,7 +23,6 @@ const GameZone = () => {
   //rules of game
   useEffect(() => {
     checkRules();
-    console.log(playerTurn)
   }, [gameCases]);
 
   //check 1st 3 games winner

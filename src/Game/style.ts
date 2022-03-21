@@ -9,6 +9,7 @@ export const Button = styled.button`
   border: 3px solid;
   transform: rotate(4deg);
   cursor: pointer;
+  border-radius: 250px 30px 225px 15px/30px 225px 15px 250px;
 `;
 export const GameCaseStyle = styled.div`
   /* background-color: #fff; */
@@ -16,41 +17,32 @@ export const GameCaseStyle = styled.div`
 `;
 export const Container = styled.div`
 
-.Popup{
-    position: fixed;
-    width: 100vw ;
-    height: 100vh ;
-    top: 0;
-    right: 0; ;
-    background-color: #fff;
-    display:flex ;
-    align-content: center;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
 .gameCaseWrapper{
     display: flex;
     justify-content: center;
     align-content: center;
     align-items: center;
-
+    border-color: #c01c1c;
+    
     .blue{color:#0786ca}
+    
     .red{color:#c01c1c}
-&:nth-child(2) { 
-    border-right:2px solid;
-    border-left:2px solid;
+    
+    &:nth-child(2) { 
+    border-right:3px solid;
+    border-left:3px solid;
+
 }
 &:nth-child(5) { 
-    border:2px solid ;
+    border:3px solid ;
 }
 &:nth-child(8) { 
-    border-right:2px solid ;
-    border-left:2px solid ;
+    border-right:3px solid ;
+    border-left:3px solid ;
 }
 &:nth-child(4),&:nth-child(6) { 
-    border-top:2px solid ;
-    border-bottom:2px solid;
+    border-top:3px solid ;
+    border-bottom:3px solid;
 }
 
 }
@@ -80,7 +72,6 @@ export const Container = styled.div`
     grid-template-rows: repeat(3, 1fr);
     grid-column-gap: 0px;
     grid-row-gap: 0px;
-    
   }
 }
 `;
