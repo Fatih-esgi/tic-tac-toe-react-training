@@ -20,7 +20,7 @@ const GameCase = ({gameCase}:Props) => {
             break;
     }
     return(
-        <GameCaseStyle>
+        <GameCaseStyle className={value === "X" ? "blue":"red"}>
 {value}
         </GameCaseStyle>
     )

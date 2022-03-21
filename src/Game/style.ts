@@ -1,16 +1,28 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-
+export const Button = styled.button`
+  /* background-color: #fff; */
+  padding: 10px 20px;
+  font-family: "Permanent Marker", cursive;
+  font-size: 30px;
+  background-color: transparent;
+  border: 3px solid;
+  transform: rotate(4deg);
+  cursor: pointer;
+`;
 export const GameCaseStyle = styled.div`
-/* background-color: #fff; */
-font-size: 200%;
-`
+  /* background-color: #fff; */
+  font-size: 200%;
+`;
 export const Container = styled.div`
 .gameCaseWrapper{
     display: flex;
     justify-content: center;
     align-content: center;
     align-items: center;
+
+    .blue{color:#0786ca}
+    .red{color:#c01c1c}
 &:nth-child(2) { 
     border-right:2px solid;
     border-left:2px solid;
@@ -31,6 +43,9 @@ export const Container = styled.div`
 .scores{
     display:flex; 
     justify-content: space-between;
+
+    .score1{color:#0786ca}
+    .score2{color:#c01c1c}
 }
 .gameBoard{
     margin-top:3rem;
@@ -44,4 +59,4 @@ export const Container = styled.div`
     
   }
 }
-`
+`;
