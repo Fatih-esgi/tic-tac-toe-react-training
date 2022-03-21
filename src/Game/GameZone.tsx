@@ -114,7 +114,7 @@ const GameZone = () => {
       winCondition(2, 4, 6);
     }
   };
-
+  
   const handleCaseClick = (id: number) => {
     if (gameCases[id].status !== undefined) {
       return;
