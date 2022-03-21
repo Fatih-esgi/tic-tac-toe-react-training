@@ -4,49 +4,49 @@ import { Container } from "./style";
 
 export interface ICases {
   id: number;
-  status: string;
+  status: undefined | string;
 }
 
 const GameZone = () => {
   const [gameStarted, setGameStarted] = useState(false);
   const [gameCases, setGameCases] = useState([] as ICases[]);
   const [playerTurn, setPlayerTurn] = useState<boolean>();
-  const [scores, setScores] = useState({ p1: 0, p2: 0 });
+  const [scoreP1, setScoreP1] = useState(0);
+  const [scoreP2, setScoreP2] = useState(0);
   const [gameEnded, setGameEnded] = useState(false);
 
   //start game
   useEffect(() => {
     initGameArray();
-    initPlayerTurn();
-    initRules();
   }, [gameStarted]);
-
+  
   //rules of game
   useEffect(() => {
-    initRules();
+    checkRules();
   }, [gameCases]);
-
+  
   //function init game array
   const initGameArray = () => {
     if (gameStarted === true) {
       let gameArray = [] as ICases[];
       for (let i = 0; i < 9; i++) {
-        gameArray.push({ id: i, status: "" });
+        gameArray.push({ id: i, status: undefined });
       }
       return setGameCases(gameArray);
     } else {
       setGameCases([] as ICases[]);
     }
   };
-
+  
   //function init player turn
   const initPlayerTurn = () => {
     const getRandomInt = Math.floor(Math.random() * 2);
     setPlayerTurn(getRandomInt === 0 ? true : false);
+    alert(`${getRandomInt === 0 ? "player1 begin" : "player2 begin"}`)
   };
-
+  
   //function games rules
-  const initRules = () => {
+  const checkRules = () => {
     if (gameStarted === true) {
       const winCondition = (x: number, y: number, z: number) => {
         const winArray = [
@@ -54,57 +54,49 @@ const GameZone = () => {
           gameCases[y]?.status,
           gameCases[z]?.status,
         ];
-
-        const allEqual = (winArray:string[]):boolean => {
-          if (Object.values(winArray).every(x => ( x === '')) === true) {
-            return  false;
-          }else{
-            return winArray.every(v => 
-              v === winArray[0]
-              );
-            }
-        };
-        return allEqual(winArray);
-      };
-
-      // console.log(winCond1)
-      //if case 0 1 2 same value
+        
+        const FilledCaseCount = gameCases.filter((obj) => {
+          return obj.status === undefined;
+        });
+        
+        console.log("filled", FilledCaseCount);
+        if (Object.keys(FilledCaseCount).length === 0) {
+          initGameArray();
+        }
+        
+        if (winArray.includes(undefined)) {
+          return;
+        }
+        
+        if (winArray.every((v) => v === winArray[0]) === false) {
+          return;
+        }
+        
+        const playerWin = winArray[0];
+        alert(`${playerWin} has win`);
+        playerWin === "p1" ?(
+          setScoreP1(prev =>{return prev +1})
+          
+          ):(
+            setScoreP2(prev =>{return prev +1})
+            
+            )
+            initGameArray();
+            initPlayerTurn();
+          };
       winCondition(0, 1, 2);
-      //if case 3 4 5 same value
-      //if case 6 7 8 same value
-      //if case 0 3 6 same value
-      //if case 1 4 7 same value
-      //if case 2 5 8 same value
-      //if case 0 4 8 same value
-      //if case 2 4 6 same value
-
-      //check if all cases filed without Winner
-      const FilledCaseCount = gameCases.filter((obj) => {
-        return obj.status === "";
-      });
-
-      if (Object.keys(FilledCaseCount).length === 0) {
-        initGameArray();
-      }
+      winCondition(3, 4, 5);
+      winCondition(6, 7, 8);
+      winCondition(0, 3, 6);
+      winCondition(1, 4, 7);
+      winCondition(2, 5, 8);
+      winCondition(0, 4, 8);
+      winCondition(2, 4, 6);
     }
   };
 
-  const restartGame = () => {
-    initGameArray();
-  };
-  // initRules
-  //init PlayerTurn
-
-  //initScores
-
-  //initGameRules
-
-  // console.log(Object.keys(FilledCaseCount).length)
-
-  // check
-
   const handleCaseClick = (id: number) => {
-    if (gameCases[id].status !== "") {
+    if (gameCases[id].status !== undefined) {
       return;
     }
     setPlayerTurn(!playerTurn);
@@ -126,10 +118,10 @@ const GameZone = () => {
         <Container>
           <div className="scores">
             <p>
-              joueur 1 : <span>0</span>
+              joueur 1 : <span>{scoreP1}</span>
             </p>
             <p>
-              joueur 2 : <span>0</span>{" "}
+              joueur 2 : <span>{scoreP2}</span>{" "}
             </p>
           </div>
           <div className="gameBoard">
